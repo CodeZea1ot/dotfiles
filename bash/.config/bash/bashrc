@@ -1,0 +1,16 @@
+#        .--.
+#       |o_o |    Don't worry, bro.
+#       |:_/ |    I'll load custom .bashrc
+#      //   \ \   extensions if you've
+#     (|     | )  got 'em.
+#    /'\_   _/`\
+#    \___)=(___/ pb 
+#------------------------------------------------
+# Artist: Przemek Borys | https://asciiart.website/artist.php?artist_id=49
+#------------------------------------------------
+
+for file in prompt aliases exports; do
+  f="$HOME/.config/bash/$file.sh"
+  [ -f "$f" ] && source "$f"
+done
+
