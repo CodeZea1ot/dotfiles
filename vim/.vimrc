@@ -37,12 +37,15 @@ set spellcapcheck=\S        " Check capitalized words at the start of a sentence
 set spelllang=en_us         " Use English dictionary lang for spellchecking
 set backspace=indent,eol,start " Intuitive backspace behavior.
 
-" Store undo files in a dedicated folder instead of default location
+" =========================================================
+" Undo Files (save in files for multi-session undo functionality)
+" =========================================================
+
+" Store undo files in a dedicated directory instead of default location
 if !isdirectory(expand("~/.vim/undo"))
   call mkdir(expand("~/.vim/undo"), "p")
 endif
-
-set undodir=~/.vim/undo     " Use the dedicated folder for undos
+set undodir="$HOME/.vim/undo"
 
 " Max number of undo levels
 set undolevels=1000
@@ -50,14 +53,49 @@ set undolevels=1000
 " Max number of lines for undo entries
 set undoreload=10000
 
+" =========================================================
+" Swap Files (save outside the project you are working on)
+" =========================================================
+
+" Store swap files in a dedicated directory instead of default location
+if !isdirectory(expand("~/.vim/swap"))
+  call mkdir(expand("~/.vim/swap"), "p")
+endif
+
+" Store swap files in dedicated folder (~/.vim/swap), preserving path hierarchy.
+" fallback to /tmp if needed
+set directory^="$HOME/.vim/swap//,/tmp"
 
 " =========================================================
 " Key Mappings
 " =========================================================
+
+" Leader + space to toggle off highlights after a search
 nnoremap <leader><space> :nohlsearch<CR>
+
+" Leader + w to write
 nnoremap <leader>w :w<CR>
+
+" Leader + q to quit
 nnoremap <leader>q :q<CR>
+
+" Leader + ss for toggle spell checker
 nnoremap <leader>ss :setlocal spell!<cr>
+
+" Leader + Tab + v to open explore in a vertical split
+nnoremap <leader><Tab>v :Vexplore<CR>
+
+" Leader + Tab + h to open explore in a horizontal split
+nnoremap <leader><Tab>h :Sexplore<CR>
+
+" Leader + Tab + Tab to open explore in current window
+nnoremap <leader><Tab><Tab> :Explore<CR>
+
+" Leader + h/j/k/l to move between panes
+nnoremap <leader>h <C-w>h
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>l <C-w>l
 
 " =========================================================
 " Tab completion enhancements for :e
