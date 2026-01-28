@@ -35,6 +35,7 @@ set showmatch               " Show matching brackets when text indicator is over
 set undofile                " Enable persistent undo
 set spellcapcheck=\S        " Check capitalized words at the start of a sentence for spelling
 set spelllang=en_us         " Use English dictionary lang for spellchecking
+set backspace=indent,eol,start " Intuitive backspace behavior.
 
 " Store undo files in a dedicated folder instead of default location
 if !isdirectory(expand("~/.vim/undo"))
@@ -56,7 +57,7 @@ set undoreload=10000
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
-nnoremap <leader>ss :setlocal spell!<cr> " Toggle spellchecker
+nnoremap <leader>ss :setlocal spell!<cr>
 
 " =========================================================
 " Tab completion enhancements for :e
