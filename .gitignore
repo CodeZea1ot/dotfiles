@@ -3,3 +3,6 @@
 *.swp
 *.swo
 *.bak
+
+# Dir containing some files to test .vimrc settings
+vim/dummy_files
