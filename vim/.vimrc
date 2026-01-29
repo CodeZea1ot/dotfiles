@@ -97,24 +97,85 @@ nnoremap <leader>j <C-w>j
 nnoremap <leader>k <C-w>k
 nnoremap <leader>l <C-w>l
 
+" =========================================================
+" Code Formatting
+" =========================================================
+
+" Format on save (off by default)
+let g:format_on_save = 0
+
+function! ToggleFormatOnSave()
+  let g:format_on_save = !g:format_on_save
+  if g:format_on_save
+    echohl ModeMsg
+    echo "Format on save: ON"
+  else
+    echohl WarningMsg
+    echo "Format on save: OFF"
+  endif
+
+  echohl None
+  redrawstatus
+endfunction
+
+" Add :ToggleFormatOnSave custom vim command
+command! ToggleFormatOnSave call ToggleFormatOnSave()
+
+" Auto-format on save (respects toggle)
+augroup FormatOnSave
+  autocmd!
+  autocmd BufWritePre * if g:format_on_save | call FormatFile() | endif
+augroup END
+
+" Keybinding
+nnoremap <leader>F :ToggleFormatOnSave<CR>
+
+" Always show status line
+set laststatus=2
+
+" Show Format on save in status line
+let &statusline .= '%{g:format_on_save?"[Formatting on Save]":""}'
 
 nnoremap <leader>f :Format<CR>
 
 command! Format call FormatFile()
-" =========================================================
-" Code Formatting
-" =========================================================
+
 function! FormatFile()
-  let l:pos = getpos('.')
+  let l:view = winsaveview()
 
   if &filetype == 'python'
-    silent !black %
+    if executable('black')
+      silent !black %
+    else
+      echohl WarningMsg
+      echo "FormatFile: black not found. Install it and ensure it is in your $PATH."
+      echohl None
+      return
+    endif
+
   elseif &filetype =~ 'javascript\|typescript\|css\|html\|json'
-    silent !prettier --write %
+    if executable('prettier')
+      silent !prettier --write %
+    else
+      echohl WarningMsg
+      echo "FormatFile: prettier not found. Install it and ensure it is in your $PATH."
+      echohl None
+      return
+    endif
+
+  elseif &filetype == 'go'
+    if executable('gofmt')
+      silent !gofmt -w %
+    else
+      echohl WarningMsg
+      echo "FormatFile: gofmt not found. Install Golang and ensure it is in your $PATH."
+      echohl None
+      return
+    endif
   endif
 
   silent edit!
-  call setpos('.', l:pos)
+  call winrestview(l:view)
   redraw!
 endfunction
 
