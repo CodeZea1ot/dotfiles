@@ -133,3 +133,29 @@ cd ~/dotfiles
 stow -D bash
 ```
 
+## Vim Package
+
+### Optional Tooling
+
+#### Code Formatter Keybind
+
+Keybind: `Leader + f`
+
+Using this keybind will call a formatter based on the filetype.
+
+The formatter will format the code and save the file before redrawing the vim buffer.
+
+The following formatters must be installed and in your $PATH if you wish to use this keybind.
+
+```sh
+# JS, TS, HTML, CSS, JSON files use Prettier
+npm install -g prettier
+prettier --version # Verify install success
+
+# Python files use Black
+sudo apt install pipx
+pipx ensurepath
+source ~/.bashrc
+pipx install black
+black --version # Verify install success
+```

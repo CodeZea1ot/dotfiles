@@ -97,6 +97,27 @@ nnoremap <leader>j <C-w>j
 nnoremap <leader>k <C-w>k
 nnoremap <leader>l <C-w>l
 
+
+nnoremap <leader>f :Format<CR>
+
+command! Format call FormatFile()
+" =========================================================
+" Code Formatting
+" =========================================================
+function! FormatFile()
+  let l:pos = getpos('.')
+
+  if &filetype == 'python'
+    silent !black %
+  elseif &filetype =~ 'javascript\|typescript\|css\|html\|json'
+    silent !prettier --write %
+  endif
+
+  silent edit!
+  call setpos('.', l:pos)
+  redraw!
+endfunction
+
 " =========================================================
 " Tab completion enhancements for :e
 " =========================================================
