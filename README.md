@@ -54,11 +54,11 @@ stow -n -v vim # Optional dry-run
 stow vim # Example: Install the vim package
 ```
 
-> ⚠️ **Warning**
+> ⓘ **Note**
 >
 > The bash package does not directly replace your existing `~/.bashrc`.
 > See [Bash Package](#bash-package) below — it requires a small manual step
-> to safely source the configuration.
+> to source the configuration.
 
 ## Uninstall a Package
 
