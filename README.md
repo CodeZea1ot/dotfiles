@@ -137,7 +137,7 @@ stow -D bash
 
 ### Optional Tooling
 
-#### Code Formatter Keybind
+#### Code Formatter Keybinds
 
 Keybind: `Leader + f`
 
@@ -158,4 +158,12 @@ pipx ensurepath
 source ~/.bashrc
 pipx install black
 black --version # Verify install success
+
+# Go files will use gofmt from the standard library
 ```
+
+Keybind: `Leader + F`
+
+Using this keybind will toggle format on save.
+
+The status bar in vim will show if it is on.
