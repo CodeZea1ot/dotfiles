@@ -1,7 +1,7 @@
 #        .--.
 #       |o_o |    Don't worry, bro.
 #       |:_/ |    I'll load custom .bashrc
-#      //   \ \   extensions if you've
+#      //   \ \   submodules if you've
 #     (|     | )  got 'em.
 #    /'\_   _/`\
 #    \___)=(___/ pb 
@@ -9,7 +9,7 @@
 # Artist: Przemek Borys | https://asciiart.website/artist.php?artist_id=49
 #------------------------------------------------
 
-# You can remove a module like "prompt" below
+# You can remove a submodule like "prompt" below
 # if you do not want to use it
 for file in prompt aliases exports; do
   f="$HOME/.config/bash/$file.sh"

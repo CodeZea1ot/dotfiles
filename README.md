@@ -86,14 +86,17 @@ fi
 
 All the files in the bash package live in `~/.config/bash`.
 
+I refer to these as "submodules" of the bash package.
+
 This keeps your distro-provided `~/.bashrc` intact while allowing your dotfiles to be sourced cleanly.
 
 After updating your `~/.bashrc`, finish installation with:
 
 ```sh
-source ~/.bashrc
+source ~/.bashrc # Source to get new (dotfiles) block
 cd ~/dotfiles
 stow bash
+source ~/.bashrc # Source again so (dotfiles) block is executed on submodules
 ```
 
 #### Opting Out of Bash Submodules
