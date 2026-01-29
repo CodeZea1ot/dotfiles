@@ -110,7 +110,7 @@ To opt out of a submodule, just edit the loop in `~/dotfiles/bash/.config/bash/b
 Here is an example of opting out of the use of `~/dotfiles/bash/.config/bash/prompt.sh`.
 
 ```sh
-# File: `~/dotfiles/.config/bash/bashrc
+# File: `~/dotfiles/bash/.config/bash/bashrc
 
 for file in aliases exports; do # "prompt" removed from the loop
   f="$HOME/.config/bash/$file.sh"
