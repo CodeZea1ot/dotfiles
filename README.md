@@ -29,12 +29,23 @@ sudo dnf install stow
 
 Each top-level directory is a package that will be symlinked into your home directory.
 
-Example:
+### Example of Corresponding Directories (packages)
+
+Example of how Stow symlinks will be created based on corresponding directories:
 
 ```
 dotfiles/
 ├── vim/.vimrc  →  ~/.vimrc
+├── prettier/.prettierrc  →  ~/.prettierrc
+├── bin/bin/some-script  →  ~/bin/some-script
+├── bash/.config/bash/prompt.sh  →  ~/.config/bash/prompt.sh
 ```
+
+To further explain:
+
+- If a package contains a **file**, Stow will create a symlink to that file in your `$HOME`.
+- If a package contains a **subdirectory**, the corresponding directory (and any parent directories) must already exist in your `$HOME` before running Stow.
+  - For more details, see [Packages Containing Directories](#packages-containing-directories) below.
 
 ## Install a Package
 
@@ -50,12 +61,37 @@ Navigate to this repository and install one or more packages using GNU Stow:
 # Example: Install vim package after performing a dry-run
 
 cd ~/dotfiles
-stow -n -v vim # Optional dry-run 
+stow -n -v vim # Optional dry-run
 stow vim # Example: Install the vim package
 ```
 
+### Packages Containing Directories
+
+Some packages include directories that must exist in your home folder before Stow can link the contents.
+
+For example, the bin package contains scripts intended for ~/bin.
+
+Before running:
+
+```sh
+cd ~/dotfiles
+stow bin
+```
+
+you must ensure that the target directory exists:
+
+```sh
+mkdir -p ~/bin
+```
+
+This is because **GNU Stow only creates symlinks for files**; it does not automatically create the target directory itself or any nested subdirectories.
+
+Once the corresponding directories exists, Stow will correctly link the files the package into it.
+
+> ⓘ **Tip**
+> For packages that install into directories like ~/bin, ~/local/share/fonts, or ~/.config, always create the corresponding directories first. Stow will then handle linking the files correctly.
+
 > ⓘ **Note**
->
 > The bash package does not directly replace your existing `~/.bashrc`.
 > See [Bash Package](#bash-package) below — it requires a small manual step
 > to source the configuration.
@@ -66,8 +102,11 @@ To remove all of the symlinks for a package created by GNU Stow:
 
 ```sh
 cd ~/dotfiles
-stow -D vim # Example: Uninstall the vim package
+stow -D vim # Example: Delete the symlinks for the vim package
 ```
+
+> ⓘ **Note**
+> If you created corresponding directories for a package before using Stow to create symlinks, you could optionally remove them.
 
 ## Bash Package
 
@@ -83,6 +122,7 @@ if [ -f "$HOME/.config/bash/bashrc" ]; then
   source "$HOME/.config/bash/bashrc"
 fi
 ```
+
 #### Bash Submodules Explained
 
 All the files in the bash package live in `~/.config/bash`.
@@ -105,7 +145,7 @@ The bash package loads submodules via scripts and a loop.
 
 To opt out of a submodule, just edit the loop in `~/dotfiles/bash/.config/bash/bashrc`.
 
-##### Example 
+##### Example
 
 Here is an example of opting out of the use of `~/dotfiles/bash/.config/bash/prompt.sh`.
 
