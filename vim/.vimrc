@@ -22,6 +22,11 @@ set expandtab               " Use spaces instead of tabs
 set smartindent             " Smart auto-indenting
 syntax on                   " Syntax highlighting
 colorscheme habamax         " Set theme for highlighting, must be after `syntax on`
+
+" Make Vim background transparent for theme, must be after `colorscheme`
+hi Normal guibg=NONE ctermbg=NONE
+hi EndOfBuffer guibg=NONE ctermbg=NONE
+
 filetype plugin indent on   " Filetype detection
 set nobackup                " Do not save backup files
 set nowrap                  " Do not wrap lines
