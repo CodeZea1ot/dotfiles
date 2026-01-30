@@ -1,12 +1,7 @@
 # Function to get current git branch
 git_branch() {
-  # Only show branch if inside a git repo
-  local branch
-  branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-  if [ -n "$branch" ]; then
-    echo "($branch)"
-  fi
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
-# Prompt
-export PS1="\u@\h: \w $(git_branch) \$ "
+# Prompt, single quotes needed to keep git_branch from being stale
+export PS1='\u@\h: \w $(git_branch) \$ '
