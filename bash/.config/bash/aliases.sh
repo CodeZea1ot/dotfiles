@@ -1,4 +1,5 @@
 alias dotfiles="cd ~/dotfiles"
+alias reload="source ~/.bashrc"
 
 # Use eza or exa if available, otherwise fallback to ls
 if command -v eza >/dev/null 2>&1; then
