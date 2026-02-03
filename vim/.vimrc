@@ -72,6 +72,20 @@ endif
 set directory^="$HOME/.vim/swap//,/tmp"
 
 " =========================================================
+" ShellCheck for .sh files (simple, single quickfix)
+" =========================================================
+augroup shellcheck
+  autocmd!
+  autocmd BufWritePost *.sh call s:RunShellcheck()
+augroup END
+
+function! s:RunShellcheck() abort
+  let l:cmd = 'shellcheck -f gcc ' . shellescape(expand('%:p'))
+  cexpr system(l:cmd)
+  cwindow
+endfunction
+
+" =========================================================
 " Key Mappings
 " =========================================================
 
@@ -174,6 +188,16 @@ function! FormatFile()
     else
       echohl WarningMsg
       echo "FormatFile: gofmt not found. Install Golang and ensure it is in your $PATH."
+      echohl None
+      return
+    endif
+
+   elseif &filetype == 'sh'
+    if executable('shfmt')
+      silent !shfmt -w %
+    else
+      echohl WarningMsg
+      echo "FormatFile: shfmt not found. Install it and ensure it is in your $PATH."
       echohl None
       return
     endif
