@@ -180,6 +180,12 @@ stow -D bash
 
 ### Optional Tooling
 
+On write, BASH files will try to run `shellcheck` as a linter.
+
+```sh
+# Install linter so :w does not complain
+sudo apt install shellcheck
+```
 #### Code Formatter Keybinds
 
 Keybind: `Leader + f`
@@ -203,6 +209,9 @@ pipx install black
 black --version # Verify install success
 
 # Go files will use gofmt from the standard library
+
+# BASH files will use shfmt
+sudo apt install shfmt
 ```
 
 Keybind: `Leader + F`
