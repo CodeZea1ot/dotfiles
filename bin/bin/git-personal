@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+# git-personal - create or update ~/.gitconfig_personal
+# Usage:
+#   git-personal --name "Full Name" --email email@example.com [-u|--update]
+
+set -euo pipefail
+
+PERSONAL_CONFIG="$HOME/.gitconfig_personal"
+NAME=""
+EMAIL=""
+UPDATE=false
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --name)
+      NAME="$2"
+      shift 2
+      ;;
+    --email)
+      EMAIL="$2"
+      shift 2
+      ;;
+    -u|--update)
+      UPDATE=true
+      shift
+      ;;
+    *)
+      echo "Unknown argument: $1"
+      echo "Usage: $0 --name \"Full Name\" --email email@example.com [-u|--update]"
+      exit 1
+      ;;
+  esac
+done
+
+# Validate required fields
+if [[ -z "$NAME" && -z "$EMAIL" ]]; then
+  echo "Error: At least one of --name or --email must be provided."
+  exit 1
+fi
+
+# Create the file if it doesn't exist
+if [[ ! -f "$PERSONAL_CONFIG" ]]; then
+  cat > "$PERSONAL_CONFIG" <<'EOF'
+# Private Git configuration for this machine
+# Must be included via main ~/.gitconfig:
+# [include]
+#     path = ~/.gitconfig_personal
+EOF
+
+  # Create [user] section only if we have something to put in it
+  if [[ -n "$NAME" || -n "$EMAIL" ]]; then
+    echo "[user]" >> "$PERSONAL_CONFIG"
+    [[ -n "$NAME" ]] && git config --file "$PERSONAL_CONFIG" user.name "$NAME"
+    [[ -n "$EMAIL" ]] && git config --file "$PERSONAL_CONFIG" user.email "$EMAIL"
+  fi
+  echo "Created $PERSONAL_CONFIG"
+  exit 0
+fi
+
+# File exists
+if $UPDATE; then
+  # Ensure [user] section exists
+  if ! grep -q "^\[user\]" "$PERSONAL_CONFIG"; then
+    echo "[user]" >> "$PERSONAL_CONFIG"
+  fi
+  # Update values using git config
+  [[ -n "$NAME" ]] && git config --file "$PERSONAL_CONFIG" user.name "$NAME"
+  [[ -n "$EMAIL" ]] && git config --file "$PERSONAL_CONFIG" user.email "$EMAIL"
+  echo "Updated $PERSONAL_CONFIG"
+else
+  echo "$PERSONAL_CONFIG already exists. Use -u or --update to modify it."
+  exit 1
+fi
+

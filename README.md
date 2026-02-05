@@ -194,6 +194,9 @@ If you decide to use this package, you will need to have a `~/.gitconfig_persona
     email = me@somewhere.com
 ```
 
+> ⓘ **Note**
+> If you have the **bin** package installed, you can generate or update `~/.gitconfig_personal` by running `git-personal --name "Full Name" --email me@somewhere.com [-u | --update]`
+
 ## Vim Package
 
 ### Optional Tooling
