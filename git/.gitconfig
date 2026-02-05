@@ -1,0 +1,14 @@
+[core]
+  editor = vim
+
+[init]
+  defaultBranch = main
+
+[merge]
+  tool = vimdiff
+
+[diff]
+  tool = vimdiff
+
+[include]
+  path = ~/.gitconfig_personal
