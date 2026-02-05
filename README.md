@@ -143,20 +143,19 @@ source ~/.bashrc # Source to run (dotfiles) block on stowed submodules
 
 The bash package loads submodules via scripts and a loop.
 
-To opt out of a submodule, just edit the loop in `~/dotfiles/bash/.config/bash/bashrc`.
+You can easily opt-out of submodules by defining your own values for `$BASH_SUBMODULES`.
 
 ##### Example
 
 Here is an example of opting out of the use of `~/dotfiles/bash/.config/bash/prompt.sh`.
 
 ```sh
-# File: `~/dotfiles/bash/.config/bash/bashrc
+# File: `~/.bashrc`
 
-for file in aliases exports; do # "prompt" removed from the loop
-  f="$HOME/.config/bash/$file.sh"
-  [ -f "$f" ] && source "$f"
-done
+export BASH_SUBMODULES="aliases exports funcs" # note, prompt is not listed
 ```
+
+If you do not `export BASH_SUBMODULES` in your environment, all submodules will be enabled by default.
 
 ### Uninstallation
 

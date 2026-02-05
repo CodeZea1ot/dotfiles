@@ -1,18 +1,21 @@
+#!/bin/env bash
+#
 #        .--.
 #       |o_o |    Don't worry, bro.
 #       |:_/ |    I'll load custom .bashrc
 #      //   \ \   submodules if you've
 #     (|     | )  got 'em.
 #    /'\_   _/`\
-#    \___)=(___/ pb 
+#    \___)=(___/ pb
 #------------------------------------------------
 # Artist: Przemek Borys | https://asciiart.website/artist.php?artist_id=49
 #------------------------------------------------
 
-# You can remove a submodule like "prompt" below
-# if you do not want to use it
-for file in prompt aliases exports funcs; do
-  f="$HOME/.config/bash/$file.sh"
-  [ -f "$f" ] && source "$f"
-done
+# When BASH_SUBMODULES is unset, fall back to defaults
+: "${BASH_SUBMODULES:=prompt aliases exports funcs}"
 
+# Load the submodules
+for file in $BASH_SUBMODULES; do
+	f="$HOME/.config/bash/$file.sh"
+	[ -f "$f" ] && source "$f"
+done

@@ -1,3 +1,5 @@
+#!/bin/env bash
+
 # backup <file>: Create a backup copy of a file by appending ".bak" to its name
 # Examples:
 #   backup config.yaml       -> creates a backup file named config.yaml.bak
@@ -54,7 +56,7 @@ up() {
   for ((i=0;i<n;i++)); do
     path="../$path"
   done
-  cd "$path"
+  cd "$path" || return
 }
 
 
