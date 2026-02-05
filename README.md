@@ -39,6 +39,7 @@ dotfiles/
 ├── prettier/.prettierrc  →  ~/.prettierrc
 ├── bin/bin/some-script  →  ~/bin/some-script
 ├── bash/.config/bash/prompt.sh  →  ~/.config/bash/prompt.sh
+├── git/.gitconfig  →  ~/.gitconfig
 ```
 
 To further explain:
@@ -173,6 +174,24 @@ Then remove the bash package symlinks:
 ```sh
 cd ~/dotfiles
 stow -D bash
+```
+
+## Git Package
+
+The git package makes it easy to configure `~/.gitconfig` on a new machine.
+
+If you decide to use this package, you will need to have a `~/.gitconfig_personal` file that contains information that should not be in version control.
+
+### Example `~/.gitconfig_personal`
+```
+# Private Git configuration for this machine
+# Must be included via main ~/.gitconfig:
+# [include]
+#     path = ~/.gitconfig_personal
+
+[user]
+    name = First Last
+    email = me@somewhere.com
 ```
 
 ## Vim Package
